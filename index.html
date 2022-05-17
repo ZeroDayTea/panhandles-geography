@@ -11,6 +11,7 @@
     <link href="./main.css" rel="stylesheet" />
     <link href="./dist/svgMap.css" rel="stylesheet" />
     <script src="./dist/svgMap.js"></script>
+    <script src="./confetti.min.js"></script>
   </head>
 
   <style>
@@ -20,11 +21,23 @@
     }
       
     circle:hover {
-      stroke-width: 7;
+      stroke-width: 5;
+    }
+
+    section > * {
+        z-index: 9;
+        position: relative;
+        top: 0;
+      }
+    section > canvas {
+      z-index: -1;
+      position: absolute;
+      left: 0;
     }
   </style>
 
   <body>
+    <section>
     <div class="wrapper">
       <div class="container">
         <h2><img src="./pan.png"/> Panhandles Geography <img src="./pan.png"/></h2>
@@ -54,14 +67,9 @@
 
           <label style="position: relative; left: 20%;" id="score">Score: 0</label>
 
-          <!-- experiment circle -->
-          <svg height="25" width="25">
-            <circle cx="12" cy="12" r="9" stroke="black" fill="white" />
-          </svg>
-
-          <label style="position: relative; left: 65%;" id="minutes">00</label>
-          <label style="position: relative; left: 65%;" id="timedivider">:</label>
-          <label style="position: relative; left: 65%;" id="seconds">00</label>
+          <label style="position: relative; left: 60%;" id="minutes">00</label>
+          <label style="position: relative; left: 60%;" id="timedivider">:</label>
+          <label style="position: relative; left: 60%;" id="seconds">00</label>
         </div>
         <div id="panhandlesMap"></div>
 
@@ -75,9 +83,13 @@
           });
         </script>
       </div>
+      
     </div>
+    <canvas id="canvas"></canvas>
+  </section>
+    
 
-    <p id="goal" style="position: absolute; top: 0; left: 0;"></p>
+    <p id="goal" style="position: absolute; top: 0; left: 0; z-index: 10"></p>
   </body>
   <script src="./main.js"></script>
 </html>

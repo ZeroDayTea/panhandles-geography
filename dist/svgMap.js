@@ -64,6 +64,9 @@ function svgMapWrapper(svgPanZoom) {
       //added by ZeroDayTea
       hideToolTip: false,
 
+      //added by ZeroDayTea
+      preventHover: false,
+
       // The default text to be shown when no data is present
       noDataText: 'No data available',
 
@@ -823,30 +826,34 @@ function svgMapWrapper(svgPanZoom) {
           }.bind(this),
           { passive: true }
         );
-  
-        countryElement.addEventListener(
-          'mouseenter',
-          function (e) {
-            countryElement.parentNode.appendChild(countryElement);
-            var countryID = countryElement.getAttribute('data-id');
 
-            //modified by ZeroDayTea
-            if(this.options.hideToolTip !== true)
-            {
-              this.setTooltipContent(this.getTooltipContent(countryID));
-              this.showTooltip(e);
-            }
-            countryElement.addEventListener(
-              'mousemove',
-              this.tooltipMoveEvent,
+
+        //modified by ZeroDayTea
+        if(this.options.preventHover !== true)
+        {
+          countryElement.addEventListener(
+            'mouseenter',
+            function (e) {
+              countryElement.parentNode.appendChild(countryElement);
+              var countryID = countryElement.getAttribute('data-id');
+  
+              //modified by ZeroDayTea
+              if(this.options.hideToolTip !== true)
               {
-                passive: true
+                this.setTooltipContent(this.getTooltipContent(countryID));
+                this.showTooltip(e);
               }
-            );
-          }.bind(this),
-          { passive: true }
-        );
-        
+              countryElement.addEventListener(
+                'mousemove',
+                this.tooltipMoveEvent,
+                {
+                  passive: true
+                }
+              );
+            }.bind(this),
+            { passive: true }
+          );
+        }
 
         //added by ZeroDayTea
         var countryID = countryElement.getAttribute('data-id');

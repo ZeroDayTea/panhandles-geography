@@ -247,8 +247,10 @@ var countriesDict = {
 };
 
 panhandlesDict = {
-    CP: 'Cibitoke Province, Burundi',
-    FC: 'Far North Region, Cameroon',
+    AK: ['Alaska', 350, 190],
+    FL: ['Florida', 510, 365],
+    CP: ['Cibitoke Province, Burundi', 1133, 588],
+    /*FC: 'Far North Region, Cameroon',
     CC: 'Congo Pedicle, Democratic Republic of the Congo',
     KC: 'Kongo Central, Democratic Republic of the Congo',
     SR: 'Southern Red Sea Region, Eritrea',
@@ -258,14 +260,14 @@ panhandlesDict = {
     ND: 'Nsanje District, Malawi',
     KR: 'Kayes Region, Mali',
     AM: 'Azawad, Mali',
-    TP: 'Tete Province, Mozambique',
-    CN: 'Caprivi Strip, Namibia',
+    TP: 'Tete Province, Mozambique',*/
+    CN: ['Caprivi Strip, Namibia', 1090, 680],/*
     CS: 'Casamance, Senegal',
     KG: 'Kalahari Gemsbok National Park, South Africa',
     UN: 'Upper Nile, South Sudan',
     BN: 'Blue Nile, Sudan',
     WH: 'Wadi Halfa Salient, Sudan',
-    KT: 'Kagera Region, Tanzania'
+    KT: 'Kagera Region, Tanzania'*/
 }
 
 const countryMapper = (country) => countriesDict[country] || "No Country of that ID";
@@ -273,6 +275,11 @@ var timeInterval;
 
 var changeGameMode = function(selectedObject) {
     resetTime();
+    
+    //check if confetti exists before clearing
+    if (typeof confetti != "undefined") {
+        confetti.clear();
+     }
 
     if(selectedObject.value == "world")
     {
@@ -287,6 +294,10 @@ var changeGameMode = function(selectedObject) {
         startExploreGeography();
     }
 }
+
+//confetti variables
+var confettiSettings;
+var confetti;
 
 //variables shared by two game modes
 var currentGameMode = "none";
@@ -329,6 +340,7 @@ function startPanhandlesGeography() {
         targetElementID: 'panhandlesMap',
         hideFlag: true,
         hideToolTip: true,
+        preventHover: true,
         data: color,
         mouseWheelZoomEnabled: true,
         mouseWheelZoomWithKey: true
@@ -340,6 +352,28 @@ function startPanhandlesGeography() {
     countriesToGuess = [];
     updateScore();
     
+    //spawn all clickable circles
+    for (const [key, arr] of Object.entries(panhandlesDict)) 
+    {
+        posX = arr[1];
+        posY = arr[2];
+
+        var elem = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        elem.setAttribute('height', '20');
+        elem.setAttribute('width', '20');
+        elem.setAttribute('x', `${posX}`);
+        elem.setAttribute('y', `${posY}`);
+        elem.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+        elem.setAttribute('id', arr[0]);
+        elem.setAttribute("onclick", `circleClick("${arr[0]}");`);
+        elem.innerHTML = '<circle cx="10" cy="10" r="8" stroke="black" fill="white" />';
+        document.getElementsByClassName("svg-pan-zoom_viewport")[0].appendChild(elem);
+
+        countriesToGuess.push(arr[0]);
+    }
+
+    chooseRandomCountry();
+
     timeInterval = setInterval(setTime, 1000);
 }
 
@@ -356,6 +390,7 @@ function startExploreGeography() {
     currentGameMode = "explore";
     goal = "";
     score = 0;
+    document.getElementById("score").innerHTML = "Score: " + score;
     countriesToGuess = [];
     updateScore();
 }
@@ -379,6 +414,10 @@ var countryClick = function(countryid) {
             }
             chooseRandomCountry();
             updateScore();
+            if(countriesToGuess.length == 0)
+            {
+                win();
+            }
         }
         else
         {
@@ -386,10 +425,53 @@ var countryClick = function(countryid) {
             updateScore();
         }
     }
-    else if(currentGameMode == "panhandles")
+}
+
+var circleClick = function(circleid) {
+    if(currentGameMode == "panhandles")
     {
-        
+        if(circleid == goal)
+        {
+            score += 1;
+            var index = countriesToGuess.indexOf(circleid);
+            if(index > -1)
+            {
+                countriesToGuess.splice(index, 1);
+            }
+            chooseRandomCountry();
+            updateScore();
+            if(countriesToGuess.length == 0)
+            {
+                win();
+            }
+        }
+        else
+        {
+            score -= 1;
+            updateScore();
+        }
     }
+}
+
+//run when player has no more locations to guess
+function win() {
+    console.log("Win!");
+    goal = "";
+    document.getElementById('goal').innerHTML = "";
+    currentGameMode = "none";
+    stopTime();
+
+    //confetti
+    confettiSettings = {
+        "target":"canvas",
+        "max":"180",
+        "animate":true,
+        "props":["circle","square","triangle","line"],
+        "colors":[[165,104,246],[230,61,135],[0,199,228],[253,214,126]],
+        "clock":"25"
+      };
+    confetti = new ConfettiGenerator(confettiSettings);
+    confetti.render();
 }
 
 //change score html element to current score variable
@@ -426,7 +508,6 @@ function setTime() {
     totalSeconds++;
     secondsLabel.innerHTML = pad(totalSeconds % 60);
     minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
-    console.log(totalSeconds);
   }
   
   function pad(val) {
@@ -442,5 +523,9 @@ function resetTime(){
     totalSeconds = 0;
     secondsLabel.innerHTML = "00";
     minutesLabel.innerHTML = "00";
+    clearInterval(timeInterval);
+}
+
+function stopTime(){
     clearInterval(timeInterval);
 }
