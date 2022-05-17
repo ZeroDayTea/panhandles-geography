@@ -455,7 +455,6 @@ var circleClick = function(circleid) {
 
 //run when player has no more locations to guess
 function win() {
-    console.log("Win!");
     goal = "";
     document.getElementById('goal').innerHTML = "";
     currentGameMode = "none";
