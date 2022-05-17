@@ -13,6 +13,17 @@
     <script src="./dist/svgMap.js"></script>
   </head>
 
+  <style>
+  /* style for clickable circles */
+    circle {
+    stroke-width: 1;
+    }
+      
+    circle:hover {
+      stroke-width: 7;
+    }
+  </style>
+
   <body>
     <div class="wrapper">
       <div class="container">
@@ -44,11 +55,8 @@
           <label style="position: relative; left: 20%;" id="score">Score: 0</label>
 
           <!-- experiment circle -->
-          <svg id="CITY_ACONCAGUA">
-            <rect id="rect12_12_" x="221.76" y="532.25" opacity="0.3" fill="#FFFFFF" stroke="#010202" stroke-miterlimit="10" enable-background="new    " width="60.91" height="14.28" />
-          
-            <ellipse id="CITY_24_" transform="matrix(0.0709 -0.9975 0.9975 0.0709 -302.7854 752.9926)" opacity="0.56" fill="#000090" enable-background="new    " cx="252.81" cy="539.03" rx="5.71" ry="5.71" />
-            <circle id="Circle_3_" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-miterlimit="10" cx="256.85" cy="565.06" r="63.26" />
+          <svg height="25" width="25">
+            <circle cx="12" cy="12" r="9" stroke="black" fill="white" />
           </svg>
 
           <label style="position: relative; left: 65%;" id="minutes">00</label>
