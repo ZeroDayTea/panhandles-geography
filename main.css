@@ -1,0 +1,45 @@
+body {
+  font-family: sans-serif;
+  color: #000;
+  background: #fff;
+  padding: 0;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.wrapper {
+  box-sizing: border-box;
+  width: 1600px;
+  max-width: calc(100% - 30px);
+  margin: auto;
+  padding: 30px 0 0;
+}
+
+.container {
+  padding: 0 0 80px;
+}
+
+.topbar {
+  background: lightslategrey;
+}
+
+h2 {
+  text-align: center;
+  font-size: 32px;
+  margin: 0 0 25px;
+  font-weight: normal;
+}
+
+@media (max-width: 900px) {
+  h2 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  h2 {
+    font-size: 18px;
+  }
+}

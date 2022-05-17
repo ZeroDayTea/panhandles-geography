@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Panhandles Geography</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script src="./svg-pan-zoom.min.js"></script>
+
+    <link href="./main.css" rel="stylesheet" />
+    <link href="./dist/svgMap.css" rel="stylesheet" />
+    <script src="./dist/svgMap.js"></script>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        <h2><img src="./pan.png"/> Panhandles Geography <img src="./pan.png"/></h2>
+
+        <h4>
+          Directions: <br>
+          Select your preferred gamemode and click on the country indicated by the target near your cursor
+          
+          <br><br>
+          World Geography includes all of the countries
+          of the world while Panhandles Geography tasks you to identify the major panhandles (salients) of our world
+          
+          <br><br>
+          Use [Alt][Scroll] to zoom in and out of the map
+
+          <br><br>
+          Click and drag to pan across the map
+        </h4>
+      
+        <div class="topbar">
+          <input type="radio" id="explore" name="game_type" value="explore" onchange="changeGameMode(this);" checked>
+          <label for="explore">Explore</label>
+          <input type="radio" id="world" name="game_type" value="world" onchange="changeGameMode(this);">
+          <label for="world">World Geography</label>
+          <input type="radio" id="panhandles" name="game_type" value="panhandles" onchange="changeGameMode(this);">
+          <label for="panhandles">Panhandles Geography</label>
+
+          <label style="position: relative; left: 20%;" id="score">Score: 0</label>
+
+          <!-- experiment circle -->
+          <svg id="CITY_ACONCAGUA">
+            <rect id="rect12_12_" x="221.76" y="532.25" opacity="0.3" fill="#FFFFFF" stroke="#010202" stroke-miterlimit="10" enable-background="new    " width="60.91" height="14.28" />
+          
+            <ellipse id="CITY_24_" transform="matrix(0.0709 -0.9975 0.9975 0.0709 -302.7854 752.9926)" opacity="0.56" fill="#000090" enable-background="new    " cx="252.81" cy="539.03" rx="5.71" ry="5.71" />
+            <circle id="Circle_3_" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-miterlimit="10" cx="256.85" cy="565.06" r="63.26" />
+          </svg>
+
+          <label style="position: relative; left: 65%;" id="minutes">00</label>
+          <label style="position: relative; left: 65%;" id="timedivider">:</label>
+          <label style="position: relative; left: 65%;" id="seconds">00</label>
+        </div>
+        <div id="panhandlesMap"></div>
+
+        <script src="./data/color.js"></script>
+        <script>
+          new svgMap({
+            targetElementID: 'panhandlesMap',
+            data: color,
+            mouseWheelZoomEnabled: true,
+            mouseWheelZoomWithKey: true
+          });
+        </script>
+      </div>
+    </div>
+
+    <p id="goal" style="position: absolute; top: 0; left: 0;"></p>
+  </body>
+  <script src="./main.js"></script>
+</html>
