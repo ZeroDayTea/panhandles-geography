@@ -256,6 +256,13 @@ panhandlesDict = {
     FN: ['Far North Province', 1045, 490],
     CS: ['Casamance', 880, 482],
     OP: ['Ontario Peninsula', 550, 285],
+    AC: ['Amazonas', 600, 550],
+    PD: ['Petén Department', 468, 452],
+    SS: ['Seven Sister States', 1475, 395],
+    CB: ['Chittagong Division', 1475, 420],
+    ST: ['Southern Thailand', 1523, 510],
+    KR: ['Kamchatka', 1710, 210],
+    DN: ['Dubrovnik-Neretva', 1056, 291],
 }
 
 const countryMapper = (country) => countriesDict[country] || "No Country of that ID";
