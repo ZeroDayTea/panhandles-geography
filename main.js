@@ -249,25 +249,13 @@ var countriesDict = {
 panhandlesDict = {
     AK: ['Alaska', 350, 190],
     FL: ['Florida', 510, 365],
-    CP: ['Cibitoke Province, Burundi', 1133, 588],
-    /*FC: 'Far North Region, Cameroon',
-    CC: 'Congo Pedicle, Democratic Republic of the Congo',
-    KC: 'Kongo Central, Democratic Republic of the Congo',
-    SR: 'Southern Red Sea Region, Eritrea',
-    GR: 'Gambela Region, Ethiopia',
-    SE: 'Somali Region, Ethiopia',
-    NC: 'Nimba County, Liberia',
-    ND: 'Nsanje District, Malawi',
-    KR: 'Kayes Region, Mali',
-    AM: 'Azawad, Mali',
-    TP: 'Tete Province, Mozambique',*/
-    CN: ['Caprivi Strip, Namibia', 1090, 680],/*
-    CS: 'Casamance, Senegal',
-    KG: 'Kalahari Gemsbok National Park, South Africa',
-    UN: 'Upper Nile, South Sudan',
-    BN: 'Blue Nile, Sudan',
-    WH: 'Wadi Halfa Salient, Sudan',
-    KT: 'Kagera Region, Tanzania'*/
+    CP: ['Cibitoke Province', 1133, 588],
+    SR: ['Southern Red Sea Region', 1200, 482],
+    TP: ['Tete Province', 1150, 660],
+    CN: ['Caprivi Strip', 1090, 680],
+    FN: ['Far North Province', 1045, 490],
+    CS: ['Casamance', 880, 482],
+    OP: ['Ontario Peninsula', 550, 285],
 }
 
 const countryMapper = (country) => countriesDict[country] || "No Country of that ID";
@@ -389,6 +377,7 @@ function startExploreGeography() {
 
     currentGameMode = "explore";
     goal = "";
+    document.getElementById('goal').innerHTML = "";
     score = 0;
     document.getElementById("score").innerHTML = "Score: " + score;
     countriesToGuess = [];
