@@ -263,6 +263,7 @@ panhandlesDict = {
     ST: ['Southern Thailand', 1523, 510],
     KR: ['Kamchatka', 1710, 210],
     DN: ['Dubrovnik-Neretva', 1056, 291],
+    OK: ['Oklahoma Panhandle', 430, 340]
 }
 
 const countryMapper = (country) => countriesDict[country] || "No Country of that ID";
