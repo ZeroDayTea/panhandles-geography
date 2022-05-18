@@ -268,6 +268,7 @@ panhandlesDict = {
 
 const countryMapper = (country) => countriesDict[country] || "No Country of that ID";
 var timeInterval;
+var colorPingInterval;
 
 var changeGameMode = function(selectedObject) {
     resetTime();
@@ -299,7 +300,8 @@ var confetti;
 var currentGameMode = "none";
 var goal = ""
 var score = 0;
-countriesToGuess = [];
+var wrongGuesses = 0;
+var countriesToGuess = [];
 
 //method to start and play world geography
 function startWorldGeography() {
@@ -403,6 +405,7 @@ var countryClick = function(countryid) {
     {
         if(countryClicked == goal)
         {
+            wrongGuesses = 0;
             score += 1;
             var index = countriesToGuess.indexOf(countryClicked);
             if(index > -1)
@@ -420,6 +423,11 @@ var countryClick = function(countryid) {
         {
             score -= 1;
             updateScore();
+            wrongGuesses += 1;
+            if(wrongGuesses > 2)
+            {
+                pingRightAnswer();
+            }
         }
     }
 }
@@ -429,6 +437,7 @@ var circleClick = function(circleid) {
     {
         if(circleid == goal)
         {
+            wrongGuesses = 0;
             score += 1;
             var index = countriesToGuess.indexOf(circleid);
             if(index > -1)
@@ -446,7 +455,67 @@ var circleClick = function(circleid) {
         {
             score -= 1;
             updateScore();
+            wrongGuesses += 1;
+            if(wrongGuesses > 2)
+            {
+                pingRightAnswer();
+            }
         }
+    }
+}
+
+function changeCountryColor(colorChangeID) 
+{
+    var currentColor = document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).getAttribute('fill');
+    console.log(currentColor);
+    if(document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).getAttribute('fill') == "#ffffff")
+    {
+        document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).style.fill = "#000000"
+    }
+    else if(document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).getAttribute('fill') == "#000000")
+    {
+        document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).style.fill = "#ffffff"
+    }
+}
+
+function pingRightAnswer() 
+{
+    if(currentGameMode == "world")
+    {
+        var countryid = Object.keys(countriesDict).find(key => countriesDict[key] === goal);
+        document.getElementById(`panhandlesMap-map-country-${countryid}`).style.fill = "#ffffff";
+        colorPingInterval = setInterval(changeCountryColor(countryid), 1000);
+        
+        /*var pingElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        pingElement.classList.add('ping');
+        pingElement.style.animation = "pulse 1.5s infinite";
+        pingElement.style.display = "block";
+        pingElement.style.zIndex = "999";
+        pingElement.style.background = "#cca92c";
+        pingElement.style.position = "relative";
+        pingElement.style.borderRadius = "50%";
+        pingElement.setAttribute("x", '400');
+        pingElement.setAttribute("y", '400');
+        pingElement.setAttribute('height', '8px');
+        pingElement.setAttribute('width', '8px');
+        pingElement.innerHTML = '<circle cx="4" cy="4" r="4" stroke="black" fill="white" />';*/
+        //document.getElementById(`panhandlesMap-map-country-${countryid}`).appendChild(pingElement);
+        //document.getElementsByClassName("svg-pan-zoom_viewport")[0].appendChild(pingElement);
+
+        /*var elem = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        elem.setAttribute('height', '20');
+        elem.setAttribute('width', '20');
+        elem.setAttribute('x', `400`);
+        elem.setAttribute('y', `400`);
+        elem.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+        elem.innerHTML = '<circle cx="10" cy="10" r="8" stroke="black" fill="white" />';
+        elem.classList.add('ping');*/
+        //document.getElementsByClassName("svg-pan-zoom_viewport")[0].appendChild(pingElement);
+        //document.body.appendChild(pingElement);
+    }
+    else if(currentGameMode == "panhandles")
+    {
+
     }
 }
 

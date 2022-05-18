@@ -34,6 +34,51 @@
       position: absolute;
       left: 0;
     }
+
+    /* css needed for pulse animation */
+    .pulse {
+      margin: 0px;
+      display: block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #cca92c;
+      cursor: pointer;
+      box-shadow: 0 0 0 rgba(204,169,44, 0.4);
+      animation: pulse 1.5s infinite;
+      float: left;
+      position: relative;
+      z-index: 1;
+    }
+    .pulse:hover {
+      animation: none;
+    }
+
+    @-webkit-keyframes pulse {
+      0% {
+        -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
+      }
+      70% {
+          -webkit-box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+      }
+      100% {
+          -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+      }
+    }
+    @keyframes pulse {
+      0% {
+        -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
+        box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
+      }
+      70% {
+          -moz-box-shadow: 0 0 0 500px rgba(204,169,44, 0);
+          box-shadow: 0 0 0 500px rgba(204,169,44, 0);
+      }
+      100% {
+          -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+          box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+      }
+    }
   </style>
 
   <body>
@@ -67,9 +112,9 @@
 
           <label style="position: relative; left: 20%;" id="score">Score: 0</label>
 
-          <label style="position: relative; left: 60%;" id="minutes">00</label>
-          <label style="position: relative; left: 60%;" id="timedivider">:</label>
-          <label style="position: relative; left: 60%;" id="seconds">00</label>
+          <label style="position: absolute; right: 25px;" id="minutes">00</label>
+          <label style="position: absolute; right: 19px;" id="timedivider">:</label>
+          <label style="position: absolute; right: 0;" id="seconds">00</label>
         </div>
         <div id="panhandlesMap"></div>
 
