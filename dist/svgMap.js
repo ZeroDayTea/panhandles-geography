@@ -1,5 +1,5 @@
 /*! svgMap | https://github.com/StephanWagner/svgMap | MIT License | Copyright Stephan Wagner | https://stephanwagner.me */
-/* slightly modified from original by Patrick Dobranowski https://github.com/ZeroDayTea */
+/* modified from original by Patrick Dobranowski https://github.com/ZeroDayTea */
 
 
 // Wrapper function

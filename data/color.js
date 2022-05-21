@@ -101,7 +101,7 @@ var color = {
       colorValue: 10514,
     },
     CV: {
-      colorValue: 6944,
+      colorValue: 60000,
     },
     CF: {
       colorValue: 677,
@@ -119,7 +119,7 @@ var color = {
       colorValue: 14485,
     },
     KM: {
-      colorValue: 1588,
+      colorValue: 40000,
     },
     CG: {
       colorValue: 6642,
@@ -431,13 +431,13 @@ var color = {
       colorValue: 2080,
     },
     KN: {
-      colorValue: 26845,
+      colorValue: 38845,
     },
     LC: {
       colorValue: 14450,
     },
     VC: {
-      colorValue: 11491,
+      colorValue: 40491,
     },
     WS: {
       colorValue: 5740,
@@ -446,7 +446,7 @@ var color = {
       colorValue: 59466,
     },
     ST: {
-      colorValue: 3180,
+      colorValue: 50000,
     },
     SA: {
       colorValue: 54777,
@@ -473,7 +473,7 @@ var color = {
       colorValue: 34408,
     },
     SB: {
-      colorValue: 2157,
+      colorValue: 50000,
     },
     SO: {
       colorValue: 1229,
@@ -609,6 +609,63 @@ var color = {
     },
     SY: {
       colorValue: 4000,
-    }
+    },
+    PN: {
+      colorValue: 60000,
+    },
+    FK: {
+      colorValue: 60000,
+    },
+    CU: {
+      colorValue: 8000,
+    },
+    FO: {
+      colorValue: 60000,
+    },
+    CW: {
+      colorValue: 60000,
+    },
+    AW: {
+      colorValue: 40000,
+    },
+    VG: {
+      colorValue: 60000,
+    },
+    VI: {
+      colorValue: 10000,
+    },
+    AI: {
+      colorValue: 60000,
+    },
+    SX: {
+      colorValue: 30000,
+    },
+    MS: {
+      colorValue: 60000,
+    },
+    GP: {
+      colorValue: 40000,
+    },
+    MQ: {
+      colorValue: 60000,
+    },
+    TC: {
+      colorValue: 60000,
+    },
+    KY: {
+      colorValue: 60000,
+    },
+    PF: {
+      colorValue: 60000,
+    },
+    YT: {
+      colorValue: 60000,
+    },
+    RE: {
+      colorValue: 60000,
+    },
+    NC: {
+      colorValue: 60000,
+    },
   }
 };
