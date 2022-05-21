@@ -1,17 +1,12 @@
 var countriesDict = {
     AF: 'Afghanistan',
-    AX: 'Åland Islands',
     AL: 'Albania',
     DZ: 'Algeria',
-    AS: 'American Samoa',
     AD: 'Andorra',
     AO: 'Angola',
-    AI: 'Anguilla',
-    AQ: 'Antarctica',
     AG: 'Antigua and Barbuda',
     AR: 'Argentina',
     AM: 'Armenia',
-    AW: 'Aruba',
     AU: 'Australia',
     AT: 'Austria',
     AZ: 'Azerbaijan',
@@ -23,13 +18,11 @@ var countriesDict = {
     BE: 'Belgium',
     BZ: 'Belize',
     BJ: 'Benin',
-    BM: 'Bermuda',
     BT: 'Bhutan',
     BO: 'Bolivia',
     BA: 'Bosnia and Herzegovina',
     BW: 'Botswana',
     BR: 'Brazil',
-    IO: 'British Indian Ocean Territory',
     VG: 'British Virgin Islands',
     BN: 'Brunei Darussalam',
     BG: 'Bulgaria',
@@ -39,22 +32,16 @@ var countriesDict = {
     CM: 'Cameroon',
     CA: 'Canada',
     CV: 'Cape Verde',
-    BQ: 'Caribbean Netherlands',
-    KY: 'Cayman Islands',
     CF: 'Central African Republic',
     TD: 'Chad',
     CL: 'Chile',
     CN: 'China',
-    CX: 'Christmas Island',
-    CC: 'Cocos Islands',
     CO: 'Colombia',
     KM: 'Comoros',
     CG: 'Congo',
-    CK: 'Cook Islands',
     CR: 'Costa Rica',
     HR: 'Croatia',
     CU: 'Cuba',
-    CW: 'Curaçao',
     CY: 'Cyprus',
     CZ: 'Czech Republic',
     CD: 'Democratic Republic of the Congo',
@@ -69,26 +56,20 @@ var countriesDict = {
     ER: 'Eritrea',
     EE: 'Estonia',
     ET: 'Ethiopia',
-    FK: 'Falkland Islands',
-    FO: 'Faroe Islands',
     FM: 'Federated States of Micronesia',
     FJ: 'Fiji',
     FI: 'Finland',
     FR: 'France',
     GF: 'French Guiana',
-    PF: 'French Polynesia',
-    TF: 'French Southern Territories',
     GA: 'Gabon',
     GM: 'Gambia',
     GE: 'Georgia',
     DE: 'Germany',
     GH: 'Ghana',
-    GI: 'Gibraltar',
     GR: 'Greece',
     GL: 'Greenland',
     GD: 'Grenada',
     GP: 'Guadeloupe',
-    GU: 'Guam',
     GT: 'Guatemala',
     GN: 'Guinea',
     GW: 'Guinea-Bissau',
@@ -302,6 +283,7 @@ var goal = ""
 var score = 0;
 var wrongGuesses = 0;
 var countriesToGuess = [];
+var colorChangeID = "";
 
 //method to start and play world geography
 function startWorldGeography() {
@@ -405,6 +387,7 @@ var countryClick = function(countryid) {
     {
         if(countryClicked == goal)
         {
+            clearInterval(colorPingInterval);
             wrongGuesses = 0;
             score += 1;
             var index = countriesToGuess.indexOf(countryClicked);
@@ -437,6 +420,7 @@ var circleClick = function(circleid) {
     {
         if(circleid == goal)
         {
+            clearInterval(colorPingInterval);
             wrongGuesses = 0;
             score += 1;
             var index = countriesToGuess.indexOf(circleid);
@@ -464,17 +448,18 @@ var circleClick = function(circleid) {
     }
 }
 
-function changeCountryColor(colorChangeID) 
+function changeCountryColor() 
 {
-    var currentColor = document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).getAttribute('fill');
+    console.log(colorChangeID);
+    var currentColor = document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).style.fill;
     console.log(currentColor);
-    if(document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).getAttribute('fill') == "#ffffff")
+    if(currentColor == "rgb(255, 255, 255)")
     {
-        document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).style.fill = "#000000"
+        document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).style.fill = "rgb(0, 0, 0)"
     }
-    else if(document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).getAttribute('fill') == "#000000")
+    else if(currentColor == "rgb(0, 0, 0)")
     {
-        document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).style.fill = "#ffffff"
+        document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).style.fill = "rgb(255, 255, 255)"
     }
 }
 
@@ -482,9 +467,9 @@ function pingRightAnswer()
 {
     if(currentGameMode == "world")
     {
-        var countryid = Object.keys(countriesDict).find(key => countriesDict[key] === goal);
-        document.getElementById(`panhandlesMap-map-country-${countryid}`).style.fill = "#ffffff";
-        colorPingInterval = setInterval(changeCountryColor(countryid), 1000);
+        colorChangeID = Object.keys(countriesDict).find(key => countriesDict[key] === goal);
+        document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).style.fill = "rgb(255, 255, 255)";
+        colorPingInterval = setInterval(changeCountryColor, 300);
         
         /*var pingElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         pingElement.classList.add('ping');
