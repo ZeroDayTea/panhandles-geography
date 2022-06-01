@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <script src="./svg-pan-zoom.min.js"></script>
+    <script src="./svg-pan-zoom.js"></script>
 
     <link href="./main.css" rel="stylesheet" />
     <link href="./dist/svgMap.css" rel="stylesheet" />
@@ -21,7 +21,7 @@
     }
       
     circle:hover {
-      stroke-width: 5;
+      stroke-width: 4;
     }
 
     section > * {
@@ -33,51 +33,6 @@
       z-index: -1;
       position: absolute;
       left: 0;
-    }
-
-    /* css needed for pulse animation */
-    .pulse {
-      margin: 0px;
-      display: block;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #cca92c;
-      cursor: pointer;
-      box-shadow: 0 0 0 rgba(204,169,44, 0.4);
-      animation: pulse 1.5s infinite;
-      float: left;
-      position: relative;
-      z-index: 1;
-    }
-    .pulse:hover {
-      animation: none;
-    }
-
-    @-webkit-keyframes pulse {
-      0% {
-        -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
-      }
-      70% {
-          -webkit-box-shadow: 0 0 0 10px rgba(204,169,44, 0);
-      }
-      100% {
-          -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
-      }
-    }
-    @keyframes pulse {
-      0% {
-        -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
-        box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
-      }
-      70% {
-          -moz-box-shadow: 0 0 0 500px rgba(204,169,44, 0);
-          box-shadow: 0 0 0 500px rgba(204,169,44, 0);
-      }
-      100% {
-          -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
-          box-shadow: 0 0 0 0 rgba(204,169,44, 0);
-      }
     }
   </style>
 

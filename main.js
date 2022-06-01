@@ -218,7 +218,7 @@ var countriesDict = {
 };
 
 //countries that were too small to be clicked normally and needed a dot
-//countries that might need to be added: Aruba, Curacao, Liechtenstein, Andorra, Monaco, Vatican City, San Marino, Singapore, Hong Kong
+//countries that might need to be added: Liechtenstein, Andorra, Monaco, Vatican City, San Marino
 countryCirclesDict = {
     MV: ['Maldives', 1375, 540],
     TV: ['Tuvalu', 1970, 625],
@@ -233,7 +233,17 @@ countryCirclesDict = {
     PN: ['Pitcairn Islands', 310, 725],
     TO: ['Tonga', 2010, 710],
     WS: ['Samoa', 2025, 660],
-    WF: ['Wallis and Futuna', 1990, 665]
+    WF: ['Wallis and Futuna', 1990, 665],
+    SC: ['Seychelles', 1285, 596],
+    AW: ['Aruba', 580, 487],
+    CW: ['Curaçao', 590, 487],
+    LI: ['Liechtenstein', 1020, 265],
+    KM: ['Comoros', 1216, 643],
+    SG: ['Singapore', 1554, 558],
+    HK: ['Hong Kong', 1598, 426],
+    ST: ['São Tomé and Príncipe', 1010, 560],
+    CV: ['Cape Verde', 838, 464],
+    MT: ['Malta', 1047, 338]
 }
 
 panhandlesDict = {
@@ -294,6 +304,7 @@ var score = 0;
 var wrongGuesses = 0;
 var countriesToGuess = [];
 var colorChangeID = "";
+var currentlyPinging = false;
 
 //method to start and play world geography
 function startWorldGeography() {
@@ -326,14 +337,15 @@ function startWorldGeography() {
         posY = arr[2];
 
         var elem = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        elem.setAttribute('height', '13');
-        elem.setAttribute('width', '13');
+        elem.setAttribute('height', '12');
+        elem.setAttribute('width', '12');
+        elem.setAttribute('z-index', -1)
         elem.setAttribute('x', `${posX}`);
         elem.setAttribute('y', `${posY}`);
         elem.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
         elem.setAttribute('id', arr[0]);
         elem.setAttribute("onclick", `circleClick("${arr[0]}");`);
-        elem.innerHTML = '<circle cx="6.5" cy="6.5" r="4.5" stroke="black" fill="white" />';
+        elem.innerHTML = '<circle cx="6" cy="6" r="4" z-index="0" stroke="black" fill="white" />';
         document.getElementsByClassName("svg-pan-zoom_viewport")[0].appendChild(elem);
     }
 
@@ -418,7 +430,11 @@ var countryClick = function(countryid) {
     {
         if(countryClicked == goal)
         {
+            var audio = new Audio("correct.wav");
+            audio.play();
+
             clearInterval(colorPingInterval);
+            currentlyPinging = false;
             wrongGuesses = 0;
             score += 1;
             var index = countriesToGuess.indexOf(countryClicked);
@@ -435,6 +451,9 @@ var countryClick = function(countryid) {
         }
         else
         {
+            var audio = new Audio("incorrect.wav");
+            audio.play();
+
             score -= 1;
             updateScore();
             wrongGuesses += 1;
@@ -451,7 +470,11 @@ var circleClick = function(circleid) {
     {
         if(circleid == goal)
         {
+            var audio = new Audio("correct.wav");
+            audio.play();
+
             clearInterval(colorPingInterval);
+            currentlyPinging = false;
             wrongGuesses = 0;
             score += 1;
             var index = countriesToGuess.indexOf(circleid);
@@ -468,6 +491,9 @@ var circleClick = function(circleid) {
         }
         else
         {
+            var audio = new Audio("incorrect.wav");
+            audio.play();
+
             score -= 1;
             updateScore();
             wrongGuesses += 1;
@@ -483,7 +509,11 @@ var circleClick = function(circleid) {
         console.log(circleid);
         if(circleid == goal)
         {
+            var audio = new Audio("correct.wav");
+            audio.play();
+
             clearInterval(colorPingInterval);
+            currentlyPinging = false;
             wrongGuesses = 0;
             score += 1;
             var index = countriesToGuess.indexOf(circleid);
@@ -500,6 +530,9 @@ var circleClick = function(circleid) {
         }
         else
         {
+            var audio = new Audio("incorrect.wav");
+            audio.play();
+
             score -= 1;
             updateScore();
             wrongGuesses += 1;
@@ -542,40 +575,31 @@ function pingRightAnswer()
 {
     if(currentGameMode == "world")
     {
-        if(Object.keys(countryCirclesDict).find(key => countryCirclesDict[key][0] === goal))
+        if(!currentlyPinging)
         {
-            document.getElementById(`${goal}`).firstChild.style.fill = "rgb(255, 255, 255)";
-            colorPingInterval = setInterval(changeCircleColor, 300);
-        }
-        else
-        {
-            colorChangeID = Object.keys(countriesDict).find(key => countriesDict[key] === goal);
-            document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).style.fill = "rgb(255, 255, 255)";
-            colorPingInterval = setInterval(changeCountryColor, 300);
+            if(Object.keys(countryCirclesDict).find(key => countryCirclesDict[key][0] === goal))
+            {
+                document.getElementById(`${goal}`).firstChild.style.fill = "rgb(255, 255, 255)";
+                colorPingInterval = setInterval(changeCircleColor, 300);
+                currentlyPinging = true;
+            }
+            else
+            {
+                colorChangeID = Object.keys(countriesDict).find(key => countriesDict[key] === goal);
+                document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).style.fill = "rgb(255, 255, 255)";
+                colorPingInterval = setInterval(changeCountryColor, 300);
+                currentlyPinging = true;
+            }
         }
     }
     else if(currentGameMode == "panhandles")
     {
-        /*var pingElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        pingElement.classList.add('ping');
-        pingElement.style.animation = "pulse 1.5s infinite";
-        pingElement.style.display = "block";
-        pingElement.style.zIndex = "999";
-        pingElement.style.background = "#cca92c";
-        pingElement.style.position = "relative";
-        pingElement.style.borderRadius = "50%";
-        pingElement.setAttribute("x", '400');
-        pingElement.setAttribute("y", '400');
-        pingElement.setAttribute('height', '8px');
-        pingElement.setAttribute('width', '8px');
-        pingElement.innerHTML = '<circle cx="4" cy="4" r="4" stroke="black" fill="white" />';
-        
-        document.getElementsByClassName("svg-pan-zoom_viewport")[0].appendChild(pingElement);
-        document.getElementById(goal).style.animation = "pulse 1.5s infinite";
-        document.getElementById(goal).style.display = "block";*/
-
-        document.getElementById(`${goal}`).firstChild.style.fill = "rgb(255, 255, 255)";
-        colorPingInterval = setInterval(changeCircleColor, 300);
+        if(!currentlyPinging) 
+        {
+            document.getElementById(`${goal}`).firstChild.style.fill = "rgb(255, 255, 255)";
+            colorPingInterval = setInterval(changeCircleColor, 300);
+            currentlyPinging = true;
+        } 
     }
 }
 
@@ -583,7 +607,7 @@ function pingRightAnswer()
 function win() {
     goal = "";
     document.getElementById('goal').innerHTML = "";
-    document.getElementById('goaltoptext').innerHTML = "";
+    document.getElementById('goaltoptext').innerHTML = "You got " + score + " total points!";
     currentGameMode = "none";
     stopTime();
 
