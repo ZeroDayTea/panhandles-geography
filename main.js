@@ -490,7 +490,23 @@ function pingRightAnswer()
     }
     else if(currentGameMode == "panhandles")
     {
-
+        var pingElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        pingElement.classList.add('ping');
+        pingElement.style.animation = "pulse 1.5s infinite";
+        pingElement.style.display = "block";
+        pingElement.style.zIndex = "999";
+        pingElement.style.background = "#cca92c";
+        pingElement.style.position = "relative";
+        pingElement.style.borderRadius = "50%";
+        pingElement.setAttribute("x", '400');
+        pingElement.setAttribute("y", '400');
+        pingElement.setAttribute('height', '8px');
+        pingElement.setAttribute('width', '8px');
+        pingElement.innerHTML = '<circle cx="4" cy="4" r="4" stroke="black" fill="white" />';
+        
+        document.getElementsByClassName("svg-pan-zoom_viewport")[0].appendChild(pingElement);
+        document.getElementById(goal).style.animation = "pulse 1.5s infinite";
+        document.getElementById(goal).style.display = "block";
     }
 }
 
