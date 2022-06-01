@@ -833,7 +833,7 @@ function svgMapWrapper(svgPanZoom) {
 
         //modified by ZeroDayTea
         //added countries over time to prevent them from covering up the circles
-        if(this.options.preventHover !== true && countryID !== "AT" && countryID !== "CH" && countryID !== "DE" && countryID !== "MY" && countryID !== "IT" && countryID !== "FR" && countryID !== "ES")
+        if(this.options.preventHover !== true && countryID !== "AT" && countryID !== "CH" && countryID !== "DE" && countryID !== "MY" && countryID !== "IT" && countryID !== "FR" && countryID !== "ES" && countryID !== "SA" && countryID !== "QA")
         {
           countryElement.addEventListener(
             'mouseenter',

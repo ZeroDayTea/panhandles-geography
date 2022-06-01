@@ -249,7 +249,8 @@ countryCirclesDict = {
     MC: ['Monaco', 1009, 290],
     AD: ['Andorra', 979, 296],
     TC: ['Turks and Caicos Islands', 575, 427],
-    KY: ['Cayman Islands', 526, 442]
+    KY: ['Cayman Islands', 526, 442],
+    BH: ['Bahrain', 1247, 401]
 }
 
 panhandlesDict = {

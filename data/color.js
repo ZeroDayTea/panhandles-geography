@@ -419,7 +419,7 @@ var color = {
       colorValue: 37339,
     },
     QA: {
-      colorValue: 124529,
+      colorValue: 35529,
     },
     RO: {
       colorValue: 24508,
