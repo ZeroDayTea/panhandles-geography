@@ -88,7 +88,9 @@
         <h2><img src="./pan.png"/> Panhandles Geography <img src="./pan.png"/></h2>
 
         <h4>
-          Directions: <br>
+          <b>Directions:</b> <br>
+        </h4>
+        <h5>
           Select your preferred gamemode and click on the country indicated by the target near your cursor
           
           <br><br>
@@ -96,11 +98,14 @@
           of the world while Panhandles Geography tasks you to identify the major panhandles (<a href="https://en.wikipedia.org/wiki/Salient_(geography)" target="_blank">salients</a>) of our world
           
           <br><br>
-          Use [Alt][Scroll] to zoom in and out of the map
+          Use [Alt][Scroll] to zoom in and out of the map (this is helpful for smaller nations such as those in the Caribbean)
 
           <br><br>
           Click and drag to pan across the map
-        </h4>
+
+          <br><br>
+          If you guess incorrectly 3 times in a row the correct country or panhandle will begin blinking. If it is small enough, however, you will still need to know the region of the world it is in
+        </h5>
       
         <div class="topbar">
           <input type="radio" id="explore" name="game_type" value="explore" onchange="changeGameMode(this);" checked>
@@ -110,15 +115,15 @@
           <input type="radio" id="panhandles" name="game_type" value="panhandles" onchange="changeGameMode(this);">
           <label for="panhandles">Panhandles Geography</label>
 
-          <label style="position: relative; left: 20%;" id="score">Score: 0</label>
+          <label style="position: absolute; left: 48%;" id="goaltoptext"></label>
 
+          <label style="position: absolute; right: 52px;" id="score">Score: 0</label>
+          <label style="position: absolute; right: 45px;" id="scoredivider"> | </label>
           <label style="position: absolute; right: 25px;" id="minutes">00</label>
           <label style="position: absolute; right: 19px;" id="timedivider">:</label>
           <label style="position: absolute; right: 0;" id="seconds">00</label>
         </div>
         <div id="panhandlesMap"></div>
-
-        <svg class="ping" x="400" y="400" height="8px" width="8px" style="animation: 1.5s ease 0s infinite normal none running pulse; display: block; z-index: 999; background: rgb(204, 169, 44); position: relative; border-radius: 50%;"><circle cx="4" cy="4" r="4" stroke="black" fill="white"></circle></svg>
 
         <script src="./data/color.js"></script>
         <script>

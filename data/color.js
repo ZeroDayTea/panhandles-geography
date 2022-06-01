@@ -176,7 +176,7 @@ var color = {
       colorValue: 3393,
     },
     FJ: {
-      colorValue: 9777,
+      colorValue: 25777,
     },
     FI: {
       colorValue: 44333,
@@ -521,7 +521,7 @@ var color = {
       colorValue: 17855,
     },
     TL: {
-      colorValue: 5444,
+      colorValue: 35444,
     },
     TG: {
       colorValue: 1659,
@@ -566,7 +566,7 @@ var color = {
       colorValue: 6929,
     },
     VU: {
-      colorValue: 2739,
+      colorValue: 35739,
     },
     VE: {
       colorValue: 12114,

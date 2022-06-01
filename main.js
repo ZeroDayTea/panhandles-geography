@@ -217,6 +217,25 @@ var countriesDict = {
     ZW: 'Zimbabwe'
 };
 
+//countries that were too small to be clicked normally and needed a dot
+//countries that might need to be added: Aruba, Curacao, Liechtenstein, Andorra, Monaco, Vatican City, San Marino, Singapore, Hong Kong
+countryCirclesDict = {
+    MV: ['Maldives', 1375, 540],
+    TV: ['Tuvalu', 1970, 625],
+    NR: ['Nauru', 1902, 575],
+    TK: ['Tokelau', 2030, 630],
+    KI: ['Kiribati', 2080, 545],
+    NU: ['Niue', 2040, 690],
+    MP: ['Northern Mariana Islands', 1790, 470],
+    FM: ['Federated States of Micronesia', 1860, 520],
+    PW: ['Palau', 1725, 525],
+    MH: ['Marshall Islands', 1920, 510],
+    PN: ['Pitcairn Islands', 310, 725],
+    TO: ['Tonga', 2010, 710],
+    WS: ['Samoa', 2025, 660],
+    WF: ['Wallis and Futuna', 1990, 665]
+}
+
 panhandlesDict = {
     AK: ['Alaska', 350, 190],
     FL: ['Florida', 510, 365],
@@ -238,6 +257,7 @@ panhandlesDict = {
 }
 
 const countryMapper = (country) => countriesDict[country] || "No Country of that ID";
+const countryCircleMapper = (country) => countryCirclesDict[country] || "No Circle of that ID";
 var timeInterval;
 var colorPingInterval;
 
@@ -293,9 +313,28 @@ function startWorldGeography() {
     countriesToGuess = [];
     updateScore();
 
+    //update countries list
     for (var key in countriesDict) {
         var val = countriesDict[key];
         countriesToGuess.push(val);
+    }
+
+    //spawn all clickable circle countries (countries that are too small to appear normally)
+    for (const [key, arr] of Object.entries(countryCirclesDict)) 
+    {
+        posX = arr[1];
+        posY = arr[2];
+
+        var elem = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        elem.setAttribute('height', '13');
+        elem.setAttribute('width', '13');
+        elem.setAttribute('x', `${posX}`);
+        elem.setAttribute('y', `${posY}`);
+        elem.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+        elem.setAttribute('id', arr[0]);
+        elem.setAttribute("onclick", `circleClick("${arr[0]}");`);
+        elem.innerHTML = '<circle cx="6.5" cy="6.5" r="4.5" stroke="black" fill="white" />';
+        document.getElementsByClassName("svg-pan-zoom_viewport")[0].appendChild(elem);
     }
 
     chooseRandomCountry();
@@ -360,6 +399,7 @@ function startExploreGeography() {
     currentGameMode = "explore";
     goal = "";
     document.getElementById('goal').innerHTML = "";
+    document.getElementById('goaltoptext').innerHTML = "";
     score = 0;
     document.getElementById("score").innerHTML = "Score: " + score;
     countriesToGuess = [];
@@ -369,6 +409,7 @@ function startExploreGeography() {
 function chooseRandomCountry() {
     goal = countriesToGuess[Math.floor(Math.random()*countriesToGuess.length)];
     document.getElementById('goal').innerHTML = "Click on " + goal;
+    document.getElementById('goaltoptext').innerHTML = "Click on " + goal;
 }
 
 var countryClick = function(countryid) {
@@ -436,13 +477,43 @@ var circleClick = function(circleid) {
             }
         }
     }
+    else if(currentGameMode == "world")
+    {
+        console.log(goal);
+        console.log(circleid);
+        if(circleid == goal)
+        {
+            clearInterval(colorPingInterval);
+            wrongGuesses = 0;
+            score += 1;
+            var index = countriesToGuess.indexOf(circleid);
+            if(index > -1)
+            {
+                countriesToGuess.splice(index, 1);
+            }
+            chooseRandomCountry();
+            updateScore();
+            if(countriesToGuess.length == 0)
+            {
+                win();
+            }
+        }
+        else
+        {
+            score -= 1;
+            updateScore();
+            wrongGuesses += 1;
+            if(wrongGuesses > 2)
+            {
+                pingRightAnswer();
+            }
+        }
+    }
 }
 
 function changeCountryColor() 
 {
-    console.log(colorChangeID);
     var currentColor = document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).style.fill;
-    console.log(currentColor);
     if(currentColor == "rgb(255, 255, 255)")
     {
         document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).style.fill = "rgb(0, 0, 0)"
@@ -453,44 +524,39 @@ function changeCountryColor()
     }
 }
 
+function changeCircleColor() 
+{
+    var currentColor = document.getElementById(`${goal}`).firstChild.style.fill;
+    if(currentColor == "rgb(255, 255, 255)")
+    {
+        document.getElementById(`${goal}`).firstChild.style.fill = "rgb(0, 0, 0)"
+    }
+    else if(currentColor == "rgb(0, 0, 0)")
+    {
+        document.getElementById(`${goal}`).firstChild.style.fill = "rgb(255, 255, 255)"
+    }
+}
+
+//run when player guesses incorrectly 3 times to show correct answer
 function pingRightAnswer() 
 {
     if(currentGameMode == "world")
     {
-        colorChangeID = Object.keys(countriesDict).find(key => countriesDict[key] === goal);
-        document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).style.fill = "rgb(255, 255, 255)";
-        colorPingInterval = setInterval(changeCountryColor, 300);
-        
-        /*var pingElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        pingElement.classList.add('ping');
-        pingElement.style.animation = "pulse 1.5s infinite";
-        pingElement.style.display = "block";
-        pingElement.style.zIndex = "999";
-        pingElement.style.background = "#cca92c";
-        pingElement.style.position = "relative";
-        pingElement.style.borderRadius = "50%";
-        pingElement.setAttribute("x", '400');
-        pingElement.setAttribute("y", '400');
-        pingElement.setAttribute('height', '8px');
-        pingElement.setAttribute('width', '8px');
-        pingElement.innerHTML = '<circle cx="4" cy="4" r="4" stroke="black" fill="white" />';*/
-        //document.getElementById(`panhandlesMap-map-country-${countryid}`).appendChild(pingElement);
-        //document.getElementsByClassName("svg-pan-zoom_viewport")[0].appendChild(pingElement);
-
-        /*var elem = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        elem.setAttribute('height', '20');
-        elem.setAttribute('width', '20');
-        elem.setAttribute('x', `400`);
-        elem.setAttribute('y', `400`);
-        elem.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
-        elem.innerHTML = '<circle cx="10" cy="10" r="8" stroke="black" fill="white" />';
-        elem.classList.add('ping');*/
-        //document.getElementsByClassName("svg-pan-zoom_viewport")[0].appendChild(pingElement);
-        //document.body.appendChild(pingElement);
+        if(Object.keys(countryCirclesDict).find(key => countryCirclesDict[key][0] === goal))
+        {
+            document.getElementById(`${goal}`).firstChild.style.fill = "rgb(255, 255, 255)";
+            colorPingInterval = setInterval(changeCircleColor, 300);
+        }
+        else
+        {
+            colorChangeID = Object.keys(countriesDict).find(key => countriesDict[key] === goal);
+            document.getElementById(`panhandlesMap-map-country-${colorChangeID}`).style.fill = "rgb(255, 255, 255)";
+            colorPingInterval = setInterval(changeCountryColor, 300);
+        }
     }
     else if(currentGameMode == "panhandles")
     {
-        var pingElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        /*var pingElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         pingElement.classList.add('ping');
         pingElement.style.animation = "pulse 1.5s infinite";
         pingElement.style.display = "block";
@@ -506,7 +572,10 @@ function pingRightAnswer()
         
         document.getElementsByClassName("svg-pan-zoom_viewport")[0].appendChild(pingElement);
         document.getElementById(goal).style.animation = "pulse 1.5s infinite";
-        document.getElementById(goal).style.display = "block";
+        document.getElementById(goal).style.display = "block";*/
+
+        document.getElementById(`${goal}`).firstChild.style.fill = "rgb(255, 255, 255)";
+        colorPingInterval = setInterval(changeCircleColor, 300);
     }
 }
 
@@ -514,6 +583,7 @@ function pingRightAnswer()
 function win() {
     goal = "";
     document.getElementById('goal').innerHTML = "";
+    document.getElementById('goaltoptext').innerHTML = "";
     currentGameMode = "none";
     stopTime();
 
