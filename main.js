@@ -218,7 +218,7 @@ var countriesDict = {
 };
 
 //countries that were too small to be clicked normally and needed a dot
-//countries that might need to be added: Liechtenstein, Andorra, Monaco, Vatican City, San Marino
+//countries that might need to be added: Reunion, Mauritius, Cayman Islands
 countryCirclesDict = {
     MV: ['Maldives', 1375, 540],
     TV: ['Tuvalu', 1970, 625],
@@ -243,13 +243,18 @@ countryCirclesDict = {
     HK: ['Hong Kong', 1598, 426],
     ST: ['São Tomé and Príncipe', 1010, 560],
     CV: ['Cape Verde', 838, 464],
-    MT: ['Malta', 1047, 338]
+    MT: ['Malta', 1047, 338],
+    SM: ['San Marino', 1034, 287],
+    VA: ['Vatican City', 1034, 299],
+    MC: ['Monaco', 1009, 290],
+    AD: ['Andorra', 979, 296],
+    TC: ['Turks and Caicos Islands', 575, 427],
+    KY: ['Cayman Islands', 526, 442]
 }
 
 panhandlesDict = {
     AK: ['Alaska', 350, 190],
     FL: ['Florida', 510, 365],
-    CP: ['Cibitoke Province', 1133, 588],
     SR: ['Southern Red Sea Region', 1200, 482],
     TP: ['Tete Province', 1150, 660],
     CN: ['Caprivi Strip', 1090, 680],
@@ -263,7 +268,8 @@ panhandlesDict = {
     ST: ['Southern Thailand', 1523, 510],
     KR: ['Kamchatka', 1710, 210],
     DN: ['Dubrovnik-Neretva', 1056, 291],
-    OK: ['Oklahoma Panhandle', 430, 340]
+    OK: ['Oklahoma Panhandle', 430, 340],
+    MS: ['Misiones Province', 670, 732]
 }
 
 const countryMapper = (country) => countriesDict[country] || "No Country of that ID";
@@ -607,7 +613,7 @@ function pingRightAnswer()
 function win() {
     goal = "";
     document.getElementById('goal').innerHTML = "";
-    document.getElementById('goaltoptext').innerHTML = "You got " + score + " total points!";
+    document.getElementById('goaltoptext').innerHTML = "Nice job! You got " + score + " total points!";
     currentGameMode = "none";
     stopTime();
 

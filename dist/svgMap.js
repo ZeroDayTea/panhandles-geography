@@ -771,6 +771,9 @@ function svgMapWrapper(svgPanZoom) {
     // Add map elements
     Object.keys(mapPaths).forEach(
       function (countryID) {
+        //added by ZeroDayTea
+        console.log(countryID);
+
         var countryData = this.mapPaths[countryID];
         if (!countryData.d) {
           return;
@@ -829,7 +832,8 @@ function svgMapWrapper(svgPanZoom) {
 
 
         //modified by ZeroDayTea
-        if(this.options.preventHover !== true)
+        //added countries over time to prevent them from covering up the circles
+        if(this.options.preventHover !== true && countryID !== "AT" && countryID !== "CH" && countryID !== "DE" && countryID !== "MY" && countryID !== "IT" && countryID !== "FR" && countryID !== "ES")
         {
           countryElement.addEventListener(
             'mouseenter',
